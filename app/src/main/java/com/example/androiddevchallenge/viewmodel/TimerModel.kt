@@ -16,33 +16,26 @@
 package com.example.androiddevchallenge.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
+import com.example.androiddevchallenge.countdowntimer.CountdownTimer
 
-class TimerModel : ViewModel() {
+class TimerModel(private val countdownTimer: CountdownTimer) : ViewModel() {
 
-    val remainingSeconds: LiveData<Int> by lazy {
-        MutableLiveData(100)
-    }
-
-    // LiveData holds state which is observed by the UI
-    // (state flows down from ViewModel)
-    private val _name = MutableLiveData("")
-    val name: LiveData<String> = _name
-
-    // onNameChanged is an event we're defining that the UI can invoke
-    // (events flow up from UI)
-    fun onNameChanged(newName: String) {
-        _name.value = newName
-    }
-
+    val remainingSeconds: LiveData<String> = countdownTimer.remainingSeconds.asLiveData()
+        .map { it -> "$it" }
 
     fun setSeconds(seconds: Int) {
     }
 
+    val running: LiveData<Boolean> = countdownTimer.running.asLiveData()
+
     fun reset() {
+        countdownTimer.reset()
     }
 
     fun startOrPause() {
+        countdownTimer.startStop()
     }
 }

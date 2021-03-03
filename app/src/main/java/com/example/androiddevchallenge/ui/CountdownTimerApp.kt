@@ -31,6 +31,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.countdowntimer.CountdownTimer
 import com.example.androiddevchallenge.ui.theme.CountdownTimerTheme
 import com.example.androiddevchallenge.viewmodel.TimerModel
 
@@ -45,19 +46,24 @@ fun CountdownTimerApp(timerModel: TimerModel) {
         ) {
             Surface {
                 val typography = MaterialTheme.typography
-                val remainingSeconds: Int by timerModel.remainingSeconds.observeAsState(0)
+                val remainingSeconds: String by timerModel.remainingSeconds.observeAsState("")
 
-                Text(text = "$remainingSeconds", style = typography.h1)
+                Text(text = remainingSeconds, style = typography.h1)
             }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
+                val running: Boolean by timerModel.running.observeAsState(false)
                 Button(onClick = { timerModel.startOrPause() }) {
-                    Text(text = "Start")
+                    if (running) {
+                        Text(text = "Pause")
+                    } else {
+                        Text(text = "Start")
+                    }
                 }
-                Button(onClick = { timerModel.reset() }) {
+                Button(onClick = { timerModel.reset() }, enabled = !running) {
                     Text(text = "Reset")
                 }
             }
@@ -69,7 +75,7 @@ fun CountdownTimerApp(timerModel: TimerModel) {
 @Composable
 fun LightPreview() {
     CountdownTimerTheme {
-        CountdownTimerApp(TimerModel())
+        CountdownTimerApp(TimerModel(CountdownTimer()))
     }
 }
 
@@ -77,6 +83,6 @@ fun LightPreview() {
 @Composable
 fun DarkPreview() {
     CountdownTimerTheme(darkTheme = true) {
-        CountdownTimerApp(TimerModel())
+        CountdownTimerApp(TimerModel(CountdownTimer()))
     }
 }

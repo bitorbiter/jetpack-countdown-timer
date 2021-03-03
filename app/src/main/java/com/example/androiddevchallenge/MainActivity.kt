@@ -18,6 +18,7 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androiddevchallenge.countdowntimer.CountdownTimer
 import com.example.androiddevchallenge.ui.CountdownTimerApp
 import com.example.androiddevchallenge.ui.theme.CountdownTimerTheme
 import com.example.androiddevchallenge.viewmodel.TimerModel
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CountdownTimerTheme {
-                CountdownTimerApp(TimerModel())
+                CountdownTimerApp(TimerModel(CountdownTimer()))
             }
         }
     }
