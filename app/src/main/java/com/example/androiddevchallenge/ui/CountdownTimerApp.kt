@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -50,6 +51,8 @@ fun CountdownTimerApp(timerModel: TimerModel) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Text(text = "Timer", style = MaterialTheme.typography.h4)
+            Spacer(modifier = Modifier.height(40.dp))
             TimerDisplay(timerModel)
             Spacer(modifier = Modifier.height(150.dp))
             Row(
@@ -66,6 +69,7 @@ fun CountdownTimerApp(timerModel: TimerModel) {
                         Text(text = "Start")
                     }
                 }
+                Spacer(modifier = Modifier.width(20.dp))
                 Button(onClick = { timerModel.reset() }, enabled = !running) {
                     Text(text = "Reset")
                 }
