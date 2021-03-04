@@ -23,8 +23,18 @@ import com.example.androiddevchallenge.countdowntimer.CountdownTimer
 
 class TimerModel(private val countdownTimer: CountdownTimer) : ViewModel() {
 
-    val remainingSeconds: LiveData<String> = countdownTimer.remainingSeconds.asLiveData()
-        .map { it -> "$it" }
+    val remainingTime: LiveData<String> = countdownTimer.remainingSeconds.asLiveData()
+        .map { it -> format(it) }
+
+    private fun format(remainingTimeInSeconds: Int): String {
+        val minutes = (remainingTimeInSeconds / 60)
+        val seconds = (remainingTimeInSeconds - (minutes * 60))
+        return "${pad(minutes)}:${pad(seconds)}"
+    }
+
+    private fun pad(seconds: Int): String {
+        return seconds.toString().padStart(2, '0')
+    }
 
     fun setSeconds(seconds: Int) {
     }

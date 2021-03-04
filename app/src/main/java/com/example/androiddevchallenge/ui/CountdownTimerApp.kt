@@ -15,11 +15,15 @@
  */
 package com.example.androiddevchallenge.ui
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -28,7 +32,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.countdowntimer.CountdownTimer
@@ -42,18 +49,31 @@ fun CountdownTimerApp(timerModel: TimerModel) {
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Surface {
-                val typography = MaterialTheme.typography
-                val remainingSeconds: String by timerModel.remainingSeconds.observeAsState("")
-
-                Text(text = remainingSeconds, style = typography.h1)
-            }
+            val remainingSeconds: String by timerModel.remainingTime.observeAsState("")
+            Canvas(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                onDraw = {
+                    val paint = android.graphics.Paint()
+                    paint.textAlign = android.graphics.Paint.Align.CENTER
+                    paint.textSize = 180f
+                    paint.color = 0xffff0000.toInt()
+                    drawIntoCanvas {
+                        it.nativeCanvas.drawText(remainingSeconds, center.x, center.y, paint)
+                    }
+                }
+            )
+            Spacer(modifier = Modifier.height(30.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.Center
             ) {
                 val running: Boolean by timerModel.running.observeAsState(false)
                 Button(onClick = { timerModel.startOrPause() }) {
