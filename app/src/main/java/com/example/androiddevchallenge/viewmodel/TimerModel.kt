@@ -40,9 +40,6 @@ class TimerModel(private val countdownTimer: CountdownTimer) : ViewModel() {
         return seconds.toString().padStart(2, '0')
     }
 
-    fun setSeconds(seconds: Int) {
-    }
-
     val running: LiveData<Boolean> = countdownTimer.running.asLiveData()
 
     fun reset() {
@@ -51,5 +48,13 @@ class TimerModel(private val countdownTimer: CountdownTimer) : ViewModel() {
 
     fun startOrPause() {
         countdownTimer.startStop()
+    }
+
+    fun incrementTime() {
+        countdownTimer.incrementByMinute()
+    }
+
+    fun decrementTime() {
+        countdownTimer.decrementByMinute()
     }
 }

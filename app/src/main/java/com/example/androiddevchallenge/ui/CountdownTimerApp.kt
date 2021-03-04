@@ -25,7 +25,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -34,8 +35,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.R
 import com.example.androiddevchallenge.countdowntimer.CountdownTimer
 import com.example.androiddevchallenge.ui.theme.CountdownTimerTheme
 import com.example.androiddevchallenge.viewmodel.TimerModel
@@ -63,16 +66,39 @@ fun CountdownTimerApp(timerModel: TimerModel) {
                 horizontalArrangement = Arrangement.Center
             ) {
                 val running: Boolean by timerModel.running.observeAsState(false)
-                Button(onClick = { timerModel.startOrPause() }) {
+                IconButton(onClick = { timerModel.reset() }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.restart_alt_24px),
+                        contentDescription = "reset countdown"
+                    )
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                IconButton(onClick = { timerModel.startOrPause() }) {
                     if (running) {
-                        Text(text = "Pause")
+                        Icon(
+                            painter = painterResource(id = R.drawable.pause_circle_24px),
+                            contentDescription = "pause"
+                        )
                     } else {
-                        Text(text = "Start")
+                        Icon(
+                            painter = painterResource(id = R.drawable.not_started_24px),
+                            contentDescription = "increment time"
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.width(20.dp))
-                Button(onClick = { timerModel.reset() }, enabled = !running) {
-                    Text(text = "Reset")
+                IconButton(onClick = { timerModel.incrementTime() }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.add_circle_outline_24px),
+                        contentDescription = "increment time"
+                    )
+                }
+                Spacer(modifier = Modifier.width(20.dp))
+                IconButton(onClick = { timerModel.decrementTime() }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.remove_circle_outline_24px),
+                        contentDescription = "decrement time"
+                    )
                 }
             }
         }

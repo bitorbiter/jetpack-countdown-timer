@@ -19,14 +19,10 @@ import android.os.CountDownTimer
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class CountdownTimer {
-    val remainingSeconds: MutableStateFlow<Int> = MutableStateFlow(10)
-    var setseconds: Int = 100
+    var setseconds: Int = 180
+    val remainingSeconds: MutableStateFlow<Int> = MutableStateFlow(setseconds)
 
     private var countDownTimer: CountDownTimer? = null
-
-    fun setTimer(seconds: Int) {
-        setseconds = seconds
-    }
 
     fun reset() {
         remainingSeconds.value = setseconds
@@ -52,5 +48,15 @@ class CountdownTimer {
             countDownTimer = null
             running.value = false
         }
+    }
+
+    fun incrementByMinute() {
+        setseconds += 60
+        remainingSeconds.value = remainingSeconds.value + 60
+    }
+
+    fun decrementByMinute() {
+        setseconds -= 60
+        remainingSeconds.value = remainingSeconds.value - 60
     }
 }
