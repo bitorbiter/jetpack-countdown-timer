@@ -1,4 +1,4 @@
-# Put title of your app here
+# Countdown
 
 <!--- Replace <OWNER> with your Github Username and <REPOSITORY> with the name of your repository. -->
 <!--- You can find both of these in the url bar when you open your repository in github. -->
@@ -12,7 +12,7 @@ Android Countdown Timer built with Jetpack Compose
 ## :bulb: Motivation and Context
 <!--- Optionally point readers to interesting parts of your submission. -->
 <!--- What are you especially proud of? -->
-
+The implementation is a bit clumsy but it works.
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
