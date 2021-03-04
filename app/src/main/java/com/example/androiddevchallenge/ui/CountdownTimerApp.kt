@@ -51,10 +51,11 @@ fun CountdownTimerApp(timerModel: TimerModel) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = "Timer", style = MaterialTheme.typography.h4)
+            Text(text = "Countdown", style = MaterialTheme.typography.h4)
             Spacer(modifier = Modifier.height(40.dp))
             TimerDisplay(timerModel)
             Spacer(modifier = Modifier.height(150.dp))
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

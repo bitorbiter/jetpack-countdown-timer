@@ -38,6 +38,7 @@ fun TimerDisplay(timerModel: TimerModel) {
     val colors = MaterialTheme.colors
     val remainingSeconds: String by timerModel.remainingTime.observeAsState("")
     val seconds: Int by timerModel.seconds.observeAsState(0)
+    val progress: Int by timerModel.progress.observeAsState(0)
 
     Canvas(
         modifier = Modifier
@@ -46,11 +47,11 @@ fun TimerDisplay(timerModel: TimerModel) {
         onDraw = {
 
             rotate(-90f) {
-                drawCircle(colors.primary, size.minDimension / 2.0f, center)
+                drawCircle(Color.White, size.minDimension / 2.0f, center)
                 drawArc(
-                    Color.LightGray,
-                    0f,
-                    seconds * (360f / 60),
+                    colors.primary,
+                    seconds * (360f / 60) - 1.5f,
+                    3f,
                     useCenter = true,
                     size = this.size.copy(
                         width = size.minDimension,
@@ -58,12 +59,12 @@ fun TimerDisplay(timerModel: TimerModel) {
                     ),
                     topLeft = Offset((size.width - size.minDimension) / 2, 0f)
                 )
-                for (i in 1..60) {
-                    val offsetLength = 50f
+                for (i in 1..120) {
+                    val offsetLength = 20f
                     drawArc(
                         Color.Black,
-                        (i * (360 / 60)) - 1f,
-                        1f,
+                        (i * (360 / 120)) - 0.25f,
+                        0.5f,
                         useCenter = true,
                         size = this.size.copy(
                             width = size.minDimension - offsetLength,
@@ -78,8 +79,8 @@ fun TimerDisplay(timerModel: TimerModel) {
                 for (i in 1..12) {
                     val offsetLength = 20f
                     drawArc(
-                        Color.White,
-                        (i * (360 / 12)) - 1f,
+                        Color.Black,
+                        (i * (360 / 12)) - 0.5f,
                         1f,
                         useCenter = true,
                         size = this.size.copy(
@@ -93,6 +94,22 @@ fun TimerDisplay(timerModel: TimerModel) {
                     )
                 }
                 drawCircle(colors.background, size.minDimension / 2.0f * 0.85f, center)
+                val offsetLength = 130f
+                drawArc(
+                    colors.primary,
+                    0f,
+                    progress.toFloat(),
+                    useCenter = true,
+                    size = this.size.copy(
+                        width = size.minDimension - offsetLength,
+                        height = size.minDimension - offsetLength
+                    ),
+                    topLeft = Offset(
+                        (size.width - size.minDimension + offsetLength) / 2,
+                        offsetLength / 2
+                    )
+                )
+                drawCircle(colors.background, size.minDimension / 2.0f * 0.8f, center)
             }
 
             val textPaint = Paint()

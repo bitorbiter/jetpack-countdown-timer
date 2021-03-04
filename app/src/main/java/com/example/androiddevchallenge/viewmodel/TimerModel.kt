@@ -27,6 +27,8 @@ class TimerModel(private val countdownTimer: CountdownTimer) : ViewModel() {
         .map { format(it) }
     val seconds: LiveData<Int> = countdownTimer.remainingSeconds.asLiveData()
         .map { it % 60 }
+    val progress: LiveData<Int> = countdownTimer.remainingSeconds.asLiveData()
+        .map { 360 * it / countdownTimer.setseconds }
 
     private fun format(remainingTimeInSeconds: Int): String {
         val minutes = (remainingTimeInSeconds / 60)

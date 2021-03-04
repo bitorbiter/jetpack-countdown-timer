@@ -20,16 +20,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class CountdownTimer {
     val remainingSeconds: MutableStateFlow<Int> = MutableStateFlow(10)
-    private var _seconds: Int = 100
+    var setseconds: Int = 100
 
     private var countDownTimer: CountDownTimer? = null
 
     fun setTimer(seconds: Int) {
-        _seconds = seconds
+        setseconds = seconds
     }
 
     fun reset() {
-        remainingSeconds.value = _seconds
+        remainingSeconds.value = setseconds
     }
 
     val running = MutableStateFlow(false)
