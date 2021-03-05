@@ -37,7 +37,8 @@ fun TimerDisplay(remainingMillis: Long, setMillis: Long) {
     val seconds = remainingMillis / 1000 % 60
     val progress = 360 * remainingMillis / setMillis
 
-    Box(contentAlignment = Alignment.Center,
+    Box(
+        contentAlignment = Alignment.Center,
         modifier = Modifier
             .height(280.dp)
             .aspectRatio(1f)
@@ -113,13 +114,13 @@ fun TimerDisplay(remainingMillis: Long, setMillis: Long) {
                 textPaint.textAlign = Paint.Align.CENTER
                 textPaint.textSize = 180f
                 textPaint.color = Color.Black.toArgb()
-            }) {
+            }
+    ) {
         TimerText(
             secondsMillis = remainingMillis
         )
     }
 }
-
 
 @Composable
 fun TimerText(secondsMillis: Long) {
