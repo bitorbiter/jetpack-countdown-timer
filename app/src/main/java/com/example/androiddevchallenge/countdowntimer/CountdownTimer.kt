@@ -19,13 +19,13 @@ import android.os.CountDownTimer
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class CountdownTimer {
-    var setseconds: Int = 180
-    val remainingSeconds: MutableStateFlow<Int> = MutableStateFlow(setseconds)
+    var setMillis: MutableStateFlow<Long> = MutableStateFlow(60000)
+    val remainingSeconds: MutableStateFlow<Long> = MutableStateFlow(60000)
 
     private var countDownTimer: CountDownTimer? = null
 
     fun reset() {
-        remainingSeconds.value = setseconds
+        remainingSeconds.value = setMillis.value
     }
 
     val running = MutableStateFlow(false)
@@ -33,9 +33,9 @@ class CountdownTimer {
     fun startStop() {
         if (countDownTimer == null) {
             countDownTimer =
-                object : CountDownTimer((remainingSeconds.value * 1000).toLong(), 1000) {
+                object : CountDownTimer(remainingSeconds.value, 100) {
                     override fun onTick(millisUntilFinished: Long) {
-                        remainingSeconds.value = (millisUntilFinished / 1000).toInt()
+                        remainingSeconds.value = millisUntilFinished
                     }
 
                     override fun onFinish() {
@@ -51,12 +51,12 @@ class CountdownTimer {
     }
 
     fun incrementByMinute() {
-        setseconds += 60
-        remainingSeconds.value = remainingSeconds.value + 60
+        setMillis.value += 6000
+        remainingSeconds.value = remainingSeconds.value + 6000
     }
 
     fun decrementByMinute() {
-        setseconds -= 60
-        remainingSeconds.value = remainingSeconds.value - 60
+        setMillis.value -= 6000
+        remainingSeconds.value = remainingSeconds.value - 6000
     }
 }
