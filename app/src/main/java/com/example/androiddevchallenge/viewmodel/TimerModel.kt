@@ -18,7 +18,6 @@ package com.example.androiddevchallenge.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
 import com.example.androiddevchallenge.countdowntimer.CountdownTimer
 
 class TimerModel(private val countdownTimer: CountdownTimer) : ViewModel() {
