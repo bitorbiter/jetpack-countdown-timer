@@ -46,6 +46,9 @@ import com.example.androiddevchallenge.viewmodel.TimerModel
 // Start building your app here!
 @Composable
 fun CountdownTimerApp(timerModel: TimerModel) {
+    val remainingSeconds: Long by timerModel.remainingTime.observeAsState(60000)
+    val setMillis: Long by timerModel.setMillis.observeAsState(60000)
+
     Surface(color = MaterialTheme.colors.background, modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -56,7 +59,7 @@ fun CountdownTimerApp(timerModel: TimerModel) {
         ) {
             Text(text = "Countdown", style = MaterialTheme.typography.h4)
             Spacer(modifier = Modifier.height(40.dp))
-            TimerDisplay(timerModel)
+            TimerDisplay(remainingSeconds, setMillis)
             Spacer(modifier = Modifier.height(150.dp))
 
             Row(
